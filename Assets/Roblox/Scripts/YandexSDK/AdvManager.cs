@@ -1,0 +1,83 @@
+using UnityEngine;
+
+public class AdvManager : MonoBehaviour
+{
+    [SerializeField]
+    private float advTimer;
+    float advBreak = 60f;
+    AdvAlert advAlert;
+    bool isCounterToAdv;
+
+    PlayerController playerController;
+
+    public static bool isAdvOpen;
+    private void Awake()
+    {
+        transform.SetParent(null);
+        advAlert = GetComponent<AdvAlert>();
+        playerController = FindObjectOfType<PlayerController>();
+    }
+    private void Start()
+    {
+        ResetTimer();
+#if !UNITY_EDITOR
+        AdvPauseGame(true);
+        ExternShowAdv();
+#endif
+    }
+    private void Update()
+    {
+        advTimer -= Time.deltaTime;
+        
+    }
+
+    public void StartCountToAdv()
+    {
+        if (advTimer <= 0 && !isCounterToAdv && !PlayerController.IsBusy)
+        {
+            isCounterToAdv = true;
+            AdvPauseGame(true);
+            advAlert.ShowAdvAlertPanel();
+        }
+    }
+
+    public void ExternShowAdv()
+    {        
+        YandexSDK.ShowADV();
+    }
+
+    public void ShowRewardedAdv()
+    {
+        AdvPauseGame(true);
+        YandexSDK.ShowRewardedADV();
+    }
+    public void AdvPauseGame(bool pause)
+    {
+        isAdvOpen = pause;
+        playerController.BlockPlayersInput(pause);
+        CursorLocking.LockCursor(!pause);
+    }
+    //Â Jslib
+    public void AdvContinueGame()
+    {
+        isAdvOpen = false;
+        if (PlayerController.IsBusy || InterfaceNavigation.isPauseMenuOpen)
+            return;
+        playerController.BlockPlayersInput(false);
+        CursorLocking.LockCursor(true);
+    }
+
+
+    public void ResetTimer()
+    {
+        isAdvOpen = false;
+        advTimer = advBreak;
+        isCounterToAdv = false;
+    }
+}
+
+public static class AdvZoneCheck
+{
+    public static bool notAdvZone;
+}
+
