@@ -260,11 +260,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 867440793484928570, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.14
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 1841183203969161798, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2338339208183630563, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4232589109732468567, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
       propertyPath: m_Name
@@ -276,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5055614217626902256, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.081
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5358618280897075169, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
       propertyPath: rotateDuration
@@ -331,7 +335,8 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1841183203969161798, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}

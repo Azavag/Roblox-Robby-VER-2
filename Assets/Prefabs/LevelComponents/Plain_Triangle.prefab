@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plain_Triangle
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1cc87a5bfd594124fb4551ef3a468680, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: 1cc87a5bfd594124fb4551ef3a468680, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -75,6 +79,10 @@ PrefabInstance:
     - target: {fileID: 1151388028547126963, guid: 1cc87a5bfd594124fb4551ef3a468680, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 1cc87a5bfd594124fb4551ef3a468680, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

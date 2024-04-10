@@ -22,7 +22,7 @@ public class PlayerInfo
     public int spawnPointNumber = 0;
     public int moneyCount = 0;                           //++
     public bool[] areCoinsCollect = new bool[68];       //++
-    public bool[] areCoinsCollect_2 = new bool[68];
+    public bool[] areCoinsCollect_2 = new bool[55];
     public bool[] colorsPantsBuyState = new bool[9];    //++
     public bool[] colorsShirtBuyState = new bool[9];    //++
     public bool[] specialsBuyState = new bool[7];       //++
@@ -35,7 +35,7 @@ public class PlayerInfo
     public bool[] areSpawnpointsSet = new bool[51];
     //public bool[] are2LevelSpawnpointsSet = new bool[51];
 
-    public bool[] hatSkinsBuyStates = new bool[90];                //++
+    public bool[] hatSkinsBuyStates = new bool[96];                //++
     public bool[] hairSkinsBuyStates = new bool[62];
     public bool[] hairColorsBuyStates = new bool[42];
     public bool[] accessoriesSkinsBuyStates = new bool[19];
@@ -76,7 +76,10 @@ public class Bank : MonoBehaviour
 
         if (YandexSDK.dataIsLoaded)
         {
-            Instance.playerInfo.hatSkinsBuyStates[0] = true;
+            for(int i = 0; i < 7; i++)
+            {
+                Instance.playerInfo.hatSkinsBuyStates[i] = true;
+            }           
             Instance.playerInfo.petSkinsBuyStates[0] = true;
             Instance.playerInfo.trailSkinsBuyStates[0] = true;
             Instance.playerInfo.accessoriesSkinsBuyStates[0] = true;
@@ -89,10 +92,76 @@ public class Bank : MonoBehaviour
 
             if (Instance.playerInfo.currentLevelsCheckpointsNumbers[0] == 0)
             {
-                Instance.playerInfo.currentLevelsCheckpointsNumbers[0] = Instance.playerInfo.spawnPointNumber;
-                YandexSDK.Save();
-            }           
+                Instance.playerInfo.currentLevelsCheckpointsNumbers[0] = Instance.playerInfo.spawnPointNumber;             
+            }    
             
+            for(int counter = 0; counter < Instance.playerInfo.colorsPantsBuyState.Length; counter++)
+            {
+                Instance.playerInfo.pantsSkinsBuyStates[counter] = Instance.playerInfo.colorsPantsBuyState[counter];
+            }
+
+            for (int counter = 0; counter < Instance.playerInfo.colorsShirtBuyState.Length; counter++)
+            {
+                Instance.playerInfo.shirtsSkinsBuyStates[counter] = Instance.playerInfo.colorsShirtBuyState[counter];
+            }
+           
+            Instance.playerInfo.hairSkinsBuyStates[53] = Instance.playerInfo.specialsBuyState[2];
+            if (Instance.playerInfo.choosedSpecialColor == "hair")
+                Instance.playerInfo.selectedHairId = 53;
+
+            if (Instance.playerInfo.choosedSpecialColor == "doge")
+                Instance.playerInfo.selectedHatId = 1;
+            if (Instance.playerInfo.choosedSpecialColor == "bomb")
+                Instance.playerInfo.selectedHatId = 2;
+            if (Instance.playerInfo.choosedSpecialColor == "cape")
+                Instance.playerInfo.selectedHatId = 3;
+            if (Instance.playerInfo.choosedSpecialColor == "pig")
+                Instance.playerInfo.selectedHatId = 4;
+            if (Instance.playerInfo.choosedSpecialColor == "spider")
+                Instance.playerInfo.selectedHatId = 5;
+            if (Instance.playerInfo.choosedSpecialColor == "indian")
+                Instance.playerInfo.selectedHatId = 6;
+
+
+            if (Instance.playerInfo.choosedPantsColor == "green")
+                Instance.playerInfo.selectedPantsId = 0;
+            if (Instance.playerInfo.choosedPantsColor == "blue")
+                Instance.playerInfo.selectedPantsId = 1;
+            if (Instance.playerInfo.choosedPantsColor == "yellow")
+                Instance.playerInfo.selectedPantsId = 2;
+            if (Instance.playerInfo.choosedPantsColor == "pink")
+                Instance.playerInfo.selectedPantsId = 3;
+            if (Instance.playerInfo.choosedPantsColor == "purple")
+                Instance.playerInfo.selectedPantsId = 4;
+            if (Instance.playerInfo.choosedPantsColor == "orange")
+                Instance.playerInfo.selectedPantsId = 5;
+            if (Instance.playerInfo.choosedPantsColor == "red")
+                Instance.playerInfo.selectedPantsId = 6;
+            if (Instance.playerInfo.choosedPantsColor == "silver")
+                Instance.playerInfo.selectedPantsId = 7;
+            if (Instance.playerInfo.choosedPantsColor == "gold")
+                Instance.playerInfo.selectedPantsId = 8;
+
+            if (Instance.playerInfo.choosedShirtColor == "green")
+                Instance.playerInfo.selectedShirtId = 0;
+            if (Instance.playerInfo.choosedShirtColor == "blue")
+                Instance.playerInfo.selectedShirtId = 1;
+            if (Instance.playerInfo.choosedShirtColor == "yellow")
+                Instance.playerInfo.selectedShirtId = 2;
+            if (Instance.playerInfo.choosedShirtColor == "pink")
+                Instance.playerInfo.selectedShirtId = 3;
+            if (Instance.playerInfo.choosedShirtColor == "purple")
+                Instance.playerInfo.selectedShirtId = 4;
+            if (Instance.playerInfo.choosedShirtColor == "orange")
+                Instance.playerInfo.selectedShirtId = 5;
+            if (Instance.playerInfo.choosedShirtColor == "red")
+                Instance.playerInfo.selectedShirtId = 6;
+            if (Instance.playerInfo.choosedShirtColor == "silver")
+                Instance.playerInfo.selectedShirtId = 7;
+            if (Instance.playerInfo.choosedShirtColor == "gold")
+                Instance.playerInfo.selectedShirtId = 8;
+
+            YandexSDK.Save();
             progressLoaded = true;
         }
     }
