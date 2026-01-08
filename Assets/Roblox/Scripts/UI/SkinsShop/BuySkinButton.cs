@@ -9,15 +9,18 @@ public class BuySkinButton : MonoBehaviour
     private Button buyButton;
     [SerializeField]
     private Button adsButton;
+    [SerializeField]
+    private ParticleSystem confirmBuySkinParticles;
+
 
     [Header("Refs")]
     private SoundController soundController;
     private static SkinCard selectedSkinCard;
     private AdvManager advManager;
     private HatSkinButtonsController hatCardsController;
-    private PetSkinButtonsController petCardsController;
-    private ShirtSkinButtonsController shirtCardsController;
-    private PantsSkinButtonsController pantsCardsController;
+    private PetSkinsButtonController petCardsController;
+    private ShirtColorSkinButtonsController shirtCardsController;
+    private PantsColorSkinButtonsController pantsCardsController;
     private AccessoriesSkinButtonsController accessoriesCardsController;
     private HairSkinsButtonController hairSkinButtonsController;
     private BagSkinButtonsController bagSkinButtonController;
@@ -30,30 +33,14 @@ public class BuySkinButton : MonoBehaviour
 
     private void OnEnable()
     {
-        HatSkinCard.HatCardClicked += SetSelectedSkinCardType;
-        PetSkinCard.PetCardClicked += SetSelectedSkinCardType;
-        ShirtSkinCard.ShirtCardClicked += SetSelectedSkinCardType;
-        PantsSkinCard.PantsCardClicked += SetSelectedSkinCardType;
-        AccessoriesSkinCard.ÀccessoriesCardClicked += SetSelectedSkinCardType;
-        HairSkinCard.HairCardClicked += SetSelectedSkinCardType;
-        BagSkinCard.BagCardClicked += SetSelectedSkinCardType;
-        HairSkinCard.HairCardClicked += SetSelectedSkinCardType;
-        HairColorSkinCard.HairColorCardClicked += SetSelectedSkinCardType;
+        SkinCard.cardClicked += SetSelectedSkinCardType;
 
         adsButton.onClick.AddListener(OnClickAdsButton);
         buyButton.onClick.AddListener(OnClickBuyButton);
     }
     private void OnDisable()
     {
-        HatSkinCard.HatCardClicked -= SetSelectedSkinCardType;
-        PetSkinCard.PetCardClicked -= SetSelectedSkinCardType;
-        ShirtSkinCard.ShirtCardClicked -= SetSelectedSkinCardType;
-        PantsSkinCard.PantsCardClicked -= SetSelectedSkinCardType;
-        AccessoriesSkinCard.ÀccessoriesCardClicked -= SetSelectedSkinCardType;
-        HairSkinCard.HairCardClicked -= SetSelectedSkinCardType;
-        BagSkinCard.BagCardClicked -= SetSelectedSkinCardType;
-        HairSkinCard.HairCardClicked -= SetSelectedSkinCardType;
-        HairColorSkinCard.HairColorCardClicked -= SetSelectedSkinCardType;
+        SkinCard.cardClicked -= SetSelectedSkinCardType;
 
         adsButton.onClick.RemoveListener(OnClickAdsButton);
         buyButton.onClick.RemoveListener(OnClickBuyButton);
@@ -69,9 +56,9 @@ public class BuySkinButton : MonoBehaviour
         advManager = FindObjectOfType<AdvManager>();
 
         hatCardsController = GetComponentInChildren<HatSkinButtonsController>();
-        petCardsController = GetComponentInChildren<PetSkinButtonsController>();
-        shirtCardsController = GetComponentInChildren<ShirtSkinButtonsController>();
-        pantsCardsController = GetComponentInChildren<PantsSkinButtonsController>();
+        petCardsController = GetComponentInChildren<PetSkinsButtonController>();
+        shirtCardsController = GetComponentInChildren<ShirtColorSkinButtonsController>();
+        pantsCardsController = GetComponentInChildren<PantsColorSkinButtonsController>();
         accessoriesCardsController = GetComponentInChildren<AccessoriesSkinButtonsController>();
         hairSkinButtonsController = GetComponentInChildren<HairSkinsButtonController>();
         bagSkinButtonController = GetComponentInChildren<BagSkinButtonsController>();
@@ -80,6 +67,10 @@ public class BuySkinButton : MonoBehaviour
     private void Start()
     {
         shakeTween = ButtonAnimation.ShakeAnimation(buyButton.transform);
+        if(confirmBuySkinParticles == null)
+        {
+            Debug.LogError("No particles effect");
+        }
     }
     void SetSelectedSkinCardType(SkinCard skinCard)
     {
@@ -118,40 +109,42 @@ public class BuySkinButton : MonoBehaviour
     void ConfirmBuy()
     {
         soundController.Play("ConfirmBuy");
-        selectedSkinCard.Unclock();
+        confirmBuySkinParticles.Play();
+        selectedSkinCard.Unlock();
+
         switch (selectedSkinCard.GetSkinType())
         {
             case SkinType.Hat:
-                hatCardsController.ShowCurrentModelView(selectedSkinCard);
-                hatCardsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                hatCardsController.ShowCurrentCardModelView(selectedSkinCard);
+                hatCardsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;
             case SkinType.Pet:
-                petCardsController.ShowCurrentModelView(selectedSkinCard);
-                petCardsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                petCardsController.ShowCurrentCardModelView(selectedSkinCard);
+                petCardsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;         
             case SkinType.Shirt:
-                shirtCardsController.ShowCurrentModelView(selectedSkinCard);
-                shirtCardsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                shirtCardsController.ShowCurrentCardModelView(selectedSkinCard);
+                shirtCardsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;
             case SkinType.Pants:
-                pantsCardsController.ShowCurrentModelView(selectedSkinCard);
-                pantsCardsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                pantsCardsController.ShowCurrentCardModelView(selectedSkinCard);
+                pantsCardsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;          
             case SkinType.HairStyles:
-                hairSkinButtonsController.ShowCurrentModelView(selectedSkinCard);
-                hairSkinButtonsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                hairSkinButtonsController.ShowCurrentCardModelView(selectedSkinCard);
+                hairSkinButtonsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;
             case SkinType.HairColors:
-                hairColorsSkinButtonsController.ShowCurrentModelView(selectedSkinCard);
-                hairColorsSkinButtonsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                hairColorsSkinButtonsController.ShowCurrentCardModelView(selectedSkinCard);
+                hairColorsSkinButtonsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;
             case SkinType.Accessories:
-                accessoriesCardsController.ShowCurrentModelView(selectedSkinCard);
-                accessoriesCardsController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                accessoriesCardsController.ShowCurrentCardModelView(selectedSkinCard);
+                accessoriesCardsController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;
             case SkinType.Bags:
-                bagSkinButtonController.ShowCurrentModelView(selectedSkinCard);
-                bagSkinButtonController.SaveStates(selectedSkinCard.GetSkinIdNumber());
+                bagSkinButtonController.ShowCurrentCardModelView(selectedSkinCard);
+                bagSkinButtonController.SaveBoughtSkinState(selectedSkinCard.GetSkinIdNumber());
                 break;
 
         }

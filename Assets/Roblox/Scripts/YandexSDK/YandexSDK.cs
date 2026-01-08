@@ -31,10 +31,6 @@ public class YandexSDK : MonoBehaviour
     //Получение типа устройства
     [DllImport("__Internal")]
     private static extern string GetDevice();
-    //Оценка игры
-    //[DllImport("__Internal")]
-    //private static extern string RateGameExtern();
-
 
     public event Action<string> LeaderBoardReady;
     LeaderboardController leaderboard;
@@ -102,14 +98,6 @@ public class YandexSDK : MonoBehaviour
        // Debug.Log("Реклама");
 #endif
     }
-//    static public void OpenAuthorization()
-//    {
-//#if !UNITY_EDITOR
-//        Auth();
-//#else
-//    Debug.Log("Авторизация");
-//#endif
-//    }
 
     public static void SetNewLeaderboardValue(int value)
     {
@@ -173,15 +161,4 @@ public class YandexSDK : MonoBehaviour
     {
         return deviceType;
     }
-
-
-    //    static public void RateGame()
-    //    {
-    //#if !UNITY_EDITOR
-    //        RateGameExtern();
-    //#else
-    //        Debug.Log("Оценка игры");
-    //#endif
-
-    //    }
 }

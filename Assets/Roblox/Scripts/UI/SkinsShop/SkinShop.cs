@@ -1,25 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SkinType
-{
-    Hat,
-    Pet,
-    Shirt,
-    Pants,
-    HairStyles,
-    Accessories,
-    Bags,
-    HairColors,
-}
+
 public class SkinShop : MonoBehaviour
 {
     [Header("Refs")]
-
     private HatSkinButtonsController hatSkinButtonsController;
-    private PetSkinButtonsController petSkinButtonsController;
-    private ShirtSkinButtonsController shirtSkinButtonsController;
-    private PantsSkinButtonsController pantsSkinButtonsController;
+    private PetSkinsButtonController petSkinButtonsController;
+    private ShirtColorSkinButtonsController shirtSkinButtonsController;
+    private PantsColorSkinButtonsController pantsSkinButtonsController;
     private AccessoriesSkinButtonsController àccessoriesSkinButtonController;
     private HairSkinsButtonController hairSkinButtonsController;
     private BagSkinButtonsController bagSkinButtonController;
@@ -29,7 +18,7 @@ public class SkinShop : MonoBehaviour
 
     [Header("Shop UI")]
     [SerializeField]
-    private Button closeButton;
+    private Button closeSkinShopButton;
     [SerializeField]
     private GameObject buyWindow;
 
@@ -40,9 +29,9 @@ public class SkinShop : MonoBehaviour
         soundController = FindObjectOfType<SoundController>();
 
         hatSkinButtonsController = GetComponentInChildren<HatSkinButtonsController>();
-        petSkinButtonsController = GetComponentInChildren<PetSkinButtonsController>();
-        shirtSkinButtonsController = GetComponentInChildren<ShirtSkinButtonsController>();
-        pantsSkinButtonsController = GetComponentInChildren<PantsSkinButtonsController>();
+        petSkinButtonsController = GetComponentInChildren<PetSkinsButtonController>();
+        shirtSkinButtonsController = GetComponentInChildren<ShirtColorSkinButtonsController>();
+        pantsSkinButtonsController = GetComponentInChildren<PantsColorSkinButtonsController>();
         àccessoriesSkinButtonController = GetComponentInChildren<AccessoriesSkinButtonsController>();
         hairSkinButtonsController = GetComponentInChildren<HairSkinsButtonController>();
         bagSkinButtonController = GetComponentInChildren<BagSkinButtonsController>();
@@ -52,10 +41,12 @@ public class SkinShop : MonoBehaviour
     private void OnEnable()
     {
         ShopMenuNavigation.TabSelected += OnTabSelected;
+        closeSkinShopButton.onClick.AddListener(CloseSkinShop);
     }
     private void OnDisable()
     {
         ShopMenuNavigation.TabSelected -= OnTabSelected;
+        closeSkinShopButton.onClick.RemoveListener(CloseSkinShop);
     }
 
     public void OpenSkinShop()
@@ -65,7 +56,6 @@ public class SkinShop : MonoBehaviour
 
     public void CloseSkinShop()
     {
-        soundController.MakeClickSound();
         ResetPages();      
     }
 
@@ -153,13 +143,14 @@ public class SkinShop : MonoBehaviour
         hairSkinButtonsController.ResetSkin();
         hairColorsSkinButtonsController.ResetSkin();
     }
+
     void ResetBagSkin()
     {
         bagSkinButtonController.ResetSkin();
     }
+
     void ToggleBuyWindow(bool toggle)
     {
         buyWindow.gameObject.SetActive(toggle);
     }
-
 }

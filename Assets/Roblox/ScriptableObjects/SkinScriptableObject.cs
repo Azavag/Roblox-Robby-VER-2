@@ -18,6 +18,5 @@ public class SkinScriptableObject : ScriptableObject
     public int price;
     public bool isAdsReward;
     public Sprite sprite;
-    public SkinStats skinStats;
-
 }
+

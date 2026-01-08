@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -17,34 +18,41 @@ public class SpawnManager : MonoBehaviour
     private PlayerController playerController;
     [SerializeField]
     private FadeScreen fadeScreen;
+    [SerializeField]
+    private IntroManagment introManagment;
+
     private SoundController soundController;
     private AdvManager advManager;
-
-    private FinalLevelController finalLevelController;
 
     private void OnEnable()
     {
         DeadZone.PlayerDead += OnPlayerDead;
+        PlayerController.PlayerDead += OnPlayerDead;
         CheckPoint.SpawnPointSet += OnSpawnPointSet;
+        introManagment.IntroFinished += OnIntroFinished;
     }
 
     private void OnDisable()
     {
         DeadZone.PlayerDead -= OnPlayerDead;
+        PlayerController.PlayerDead -= OnPlayerDead;
         CheckPoint.SpawnPointSet -= OnSpawnPointSet;
+        introManagment.IntroFinished -= OnIntroFinished;
     }
     private void Awake()
     {
         soundController = FindObjectOfType<SoundController>();
         advManager = FindObjectOfType<AdvManager>();
-        finalLevelController = FindObjectOfType<FinalLevelController>();
-
+        introManagment = FindObjectOfType<IntroManagment>();
+        PlayerController.IsBusy = true;
     }
     private void Start()
     {
         currentCheckPointNumber = Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[levelNumber];
         playerController.BlockPlayersInput(true);
+        
         OnReachNewCheckpoint(currentCheckPointNumber);
+        
         for (int i = 0; i < currentCheckPointNumber; i++)
         {
             checkPoints[i].DeactivateTrigger();
@@ -54,14 +62,19 @@ public class SpawnManager : MonoBehaviour
     }
    
     IEnumerator FirstSpawn()
-    {      
+    {
         fadeScreen.EnterLevelFadeOut();
+        yield return new WaitForSeconds(0.1f);
+        introManagment.StartIntro();      
         TransferPlayer();
         yield return new WaitForSeconds(fadeScreen.GetOutFadeDuration() * 0.7f);
-        if(!PlayerController.IsBusy)
-            playerController.BlockPlayersInput(false);
     }
-    IEnumerator RespawnPlayer()
+    private void OnIntroFinished()
+    {
+        PlayerController.IsBusy = false;
+        playerController.BlockPlayersInput(false);
+    }
+    private IEnumerator RespawnPlayer()
     {
         playerController.BlockPlayersInput(true);
         PlayerController.IsBusy = true;
@@ -92,8 +105,6 @@ public class SpawnManager : MonoBehaviour
     void OnReachNewCheckpoint(int index)
     {
         currentCheckPointNumber = index;
-        if (currentCheckPointNumber == checkPoints.Length - 1)
-            finalLevelController.ShowPredfinalPanel();
         currenCheckPointTransform = checkPoints[currentCheckPointNumber].GetSpawnCoordinates();
     }
     public int GetLevelNumber()

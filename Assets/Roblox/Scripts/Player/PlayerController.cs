@@ -1,5 +1,6 @@
 using ECM.Components;
 using ECM.Controllers;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,7 +10,16 @@ public class PlayerController : MonoBehaviour
     private BaseCharacterController characterController;
     private CameraSensivityControl cameraSensivityControl;
 
-    public static bool IsBusy = false;
+    public static bool IsBusy 
+    {
+        get; set;
+    }
+
+    [SerializeField]
+    private float deathTimer = 0;
+    private float deathInterval = 1f;
+
+    public static event Action PlayerDead;
 
     private void Awake()
     {
@@ -20,13 +30,15 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        IsBusy = false;
+        //IsBusy = false;
+        deathTimer = deathInterval;
     }
 
     private void FixedUpdate()
-    {      
-        if (transform.position.y < -20)
-            transform.position = Vector3.zero;
+    {
+        //if (transform.position.y < -50)
+        //    transform.position = Vector3.zero;
+
     }
 
     private void LateUpdate()
@@ -35,6 +47,22 @@ public class PlayerController : MonoBehaviour
         playerAnimatorController.PlayJumpAnimation(characterController.isJumping);
         playerAnimatorController.PlayFallAnimation(characterController.isFalling);
       
+    }
+    private void Update()
+    {
+        if(characterMovement.velocity.y >= 0)
+            deathTimer = deathInterval;
+        if (characterMovement.velocity.y < -20)
+            DeathTimer();
+    }
+    void DeathTimer()
+    {
+        deathTimer -= Time.deltaTime;
+        if(deathTimer <= 0)
+        {
+            PlayerDead?.Invoke();
+            deathTimer = deathInterval;
+        }
     }
 
     public void BlockJump(bool state)

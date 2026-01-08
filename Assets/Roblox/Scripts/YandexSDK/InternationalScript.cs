@@ -14,6 +14,11 @@ public class InternationalScript : MonoBehaviour
         if(Language.Instance.languageName == LanguageName.Rus)
             GetComponent<TextMeshProUGUI>().text = _ru;
         else 
-            GetComponent<TextMeshProUGUI>().text = _en;        
+            GetComponent<TextMeshProUGUI>().text = _en;       
+        
+    }
+    private void OnValidate()
+    {
+        _ru = GetComponent<TextMeshProUGUI>().text;
     }
 }

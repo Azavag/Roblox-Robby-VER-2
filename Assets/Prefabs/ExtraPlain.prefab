@@ -233,37 +233,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4232589109732468567, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8745616013372532403}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
---- !u!1 &1162095266402710075 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4232589109732468567, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
-  m_PrefabInstance: {fileID: 3070815177752630636}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8745616013372532403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162095266402710075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d798394e680132841b4f634aa3b4eb44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinModel: {fileID: 3906672476197141963}
-  rotationVector: {x: 0, y: 360, z: 0}
-  rotateDuration: 2.5
-  rotateEase: 1
---- !u!4 &3906672476197141963 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2065731425014147239, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}
-  m_PrefabInstance: {fileID: 3070815177752630636}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8455073774383601162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6902838381496615782, guid: 91e76213afd5e3e4080603ea341938ea, type: 3}

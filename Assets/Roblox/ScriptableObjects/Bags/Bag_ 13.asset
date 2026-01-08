@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Bag_ 13
   m_EditorClassIdentifier: 
   skinType: 6
-  idNumber: 14
-  skinName: 
+  idNumber: 13
+  skinName: SM_Chr_Attach_Bag_Straps_01
   price: 40
   isAdsReward: 0
-  sprite: {fileID: 21300000, guid: 5bd3768f2dce7f54ea2e30907bed9f03, type: 3}
-  skinStats:
-    passiveStats: 0
-    activeStats: 0
+  sprite: {fileID: 21300000, guid: 9ba049479e66ed847beea946d3ab14be, type: 3}

@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Bag_ 7
   m_EditorClassIdentifier: 
   skinType: 6
-  idNumber: 8
-  skinName: 
+  idNumber: 7
+  skinName: SM_Chr_Attach_Bag_Large_01
   price: 30
   isAdsReward: 0
-  sprite: {fileID: 21300000, guid: a7c818aa34375024983bf3769ae3fd7c, type: 3}
-  skinStats:
-    passiveStats: 0
-    activeStats: 0
+  sprite: {fileID: 21300000, guid: 1126590bb19daf84a9c0a3953309d64d, type: 3}

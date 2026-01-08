@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Hair_1 18
   m_EditorClassIdentifier: 
   skinType: 4
-  idNumber: 18
+  idNumber: 17
   skinName: 18_SM_Chr_Hair_Clean_04
   price: 20
   isAdsReward: 0
   sprite: {fileID: 21300000, guid: 273337aef4eed2241ae5387152b99a9b, type: 3}
-  skinStats:
-    passiveStats: 0
-    activeStats: 0

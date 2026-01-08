@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Bag_ 1
   m_EditorClassIdentifier: 
   skinType: 6
-  idNumber: 2
-  skinName: 
+  idNumber: 1
+  skinName: SM_Chr_Attach_Backpack_Cardboard_Jetpack_01
   price: 20
   isAdsReward: 0
-  sprite: {fileID: 21300000, guid: d0197fb8375f250419b22894e40f26db, type: 3}
-  skinStats:
-    passiveStats: 0
-    activeStats: 0
+  sprite: {fileID: 21300000, guid: 5b6643630e57eb348ab8e64150dfeba1, type: 3}

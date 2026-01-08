@@ -51,7 +51,7 @@ public class FadeScreen : MonoBehaviour
 
     }
     public void StartInFadeScreenTween()
-    {       
+    {
         interfaceNavigation.ToggleFadeScreenCanvas(true);       
         inFadeScreenTween.Restart();
     }

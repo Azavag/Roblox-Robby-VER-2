@@ -3,6 +3,7 @@ using UnityEngine;
 public class AdvManager : MonoBehaviour
 {
     [SerializeField]
+    private bool isAdvHere;
     private float advTimer;
     float advBreak = 60f;
     AdvAlert advAlert;
@@ -27,6 +28,8 @@ public class AdvManager : MonoBehaviour
     }
     private void Update()
     {
+        if (!isAdvHere)
+            return;
         advTimer -= Time.deltaTime;
         
     }
@@ -48,7 +51,8 @@ public class AdvManager : MonoBehaviour
 
     public void ShowRewardedAdv()
     {
-        AdvPauseGame(true);
+        isAdvOpen = true;
+        CursorLocking.LockCursor(false);
         YandexSDK.ShowRewardedADV();
     }
     public void AdvPauseGame(bool pause)

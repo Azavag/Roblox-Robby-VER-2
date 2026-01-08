@@ -18,6 +18,3 @@ MonoBehaviour:
   price: 10
   isAdsReward: 0
   sprite: {fileID: 21300000, guid: bb38a3951f0454743a644155173d9934, type: 3}
-  skinStats:
-    passiveStats: 1
-    activeStats: 5

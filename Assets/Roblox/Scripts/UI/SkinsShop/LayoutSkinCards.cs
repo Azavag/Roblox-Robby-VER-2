@@ -1,43 +1,34 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class LayoutSkinCards : MonoBehaviour
 {
     [SerializeField]
-    private SkinScriptableObject[] skinsCard;
-    [SerializeField]
-    private int activatedCards;
-
+    private SkinScriptableObject[] skinCardDatas;
     [SerializeField]
     private GameObject prefab;
 
-    private void OnValidate()
+
+    [ContextMenu("Generate Cards")]
+    private void GenerateCardsMenu()
     {
-        int i = 0;
-        foreach (Transform t in transform)
+        GenerateCards();
+    }
+
+    public void GenerateCards()
+    {
+        foreach (Transform child in transform)
+            DestroyImmediate(child.gameObject);
+
+        int cardIndex = 0;
+        foreach (var cardData in skinCardDatas)
         {
-            if (i >= activatedCards)
-                t.gameObject.SetActive(false);
-            else t.gameObject.SetActive(true);
-            t.GetComponent<SkinCard>().skinScriptable = skinsCard[i];
-            skinsCard[i].idNumber = i;
-            t.name = "Card_" + skinsCard[i].idNumber +"_"+ skinsCard[i].skinName;
-            i++;
+            GameObject cardInstance = Instantiate(prefab, transform);
+            cardInstance.name = $"Card_{cardIndex}_{cardData.skinName}";
 
-        }
+            SkinCard skinCard = cardInstance.GetComponent<SkinCard>();
+            skinCard.skinScriptable = cardData;
 
-        if (transform.childCount == skinsCard.Length)
-            return;
-
-        foreach (var card in skinsCard)
-        {
-            Instantiate(prefab, transform);
-        }
-        if(transform.childCount != skinsCard.Length)
-        {
-            Debug.LogError("Несоответсвие количества");
-        }
-        
-        
-
+            cardIndex++;
+        }    
     }
 }

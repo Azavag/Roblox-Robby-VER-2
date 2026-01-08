@@ -1,18 +1,27 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-
-public class SkinCard : MonoBehaviour
+public enum SkinType
+{
+    Hat,
+    Pet,
+    Shirt,
+    Pants,
+    HairStyles,
+    Accessories,
+    Bags,
+    HairColors,
+}
+public class SkinCard : MonoBehaviour, IPointerClickHandler
 {
     [Header("Stats")]
-    [SerializeField]
     public SkinScriptableObject skinScriptable;
-    private SkinType skinType;
+    protected SkinType skinType;
     [SerializeField]
-    private int idNumber;
+    protected int idNumber;
     public bool isSelected { private set; get; }
     public bool isBought { private set; get; }
     private int price;
@@ -38,6 +47,8 @@ public class SkinCard : MonoBehaviour
     [SerializeField]
     private Sprite selectedBackgroundSprite;
 
+    public static event Action<SkinCard> cardClicked;
+
     private void Awake()
     {
         priceObject.SetActive(true);
@@ -51,6 +62,11 @@ public class SkinCard : MonoBehaviour
         priceObject.GetComponentInChildren<TextMeshProUGUI>().text = price.ToString();
         isAdsReward = skinScriptable.isAdsReward;
     }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        cardClicked?.Invoke(this);
+    }
+
     private void OnValidate()
     {
         idNumber = skinScriptable.idNumber;
@@ -80,7 +96,7 @@ public class SkinCard : MonoBehaviour
         }
     }
 
-    public void Unclock()
+    public void Unlock()
     {
         isBought = true;
         lockImage.SetActive(false);
@@ -101,6 +117,11 @@ public class SkinCard : MonoBehaviour
         selectedImage.gameObject.SetActive(false);
     }
 
+    public void ChangeSkinImageColor(Color color)
+    {
+        skinImage.color = color;
+    }
+
     public void Highlight() => backgroundImage.sprite = selectedBackgroundSprite;
     public void UnHighlight() => backgroundImage.sprite = standartBackgroundSprite;
 
@@ -114,6 +135,6 @@ public class SkinCard : MonoBehaviour
     }
     public int GetSkinIdNumber()
     {
-        return idNumber;
+        return skinScriptable.idNumber;
     }
 }

@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Bag_ 17
   m_EditorClassIdentifier: 
   skinType: 6
-  idNumber: 18
-  skinName: 
+  idNumber: 17
+  skinName: SM_Chr_Attach_Magician_Wand_01
   price: 50
   isAdsReward: 0
-  sprite: {fileID: 21300000, guid: eb1b3acbb88d9d645ba0c9a242d3904d, type: 3}
-  skinStats:
-    passiveStats: 0
-    activeStats: 0
+  sprite: {fileID: 21300000, guid: 6cb2d6d15a077a24f9c657fb00dde2f6, type: 3}

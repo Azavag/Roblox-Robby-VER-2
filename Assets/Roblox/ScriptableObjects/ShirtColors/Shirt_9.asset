@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shirt_9
   m_EditorClassIdentifier: 
   skinType: 2
-  idNumber: 8
+  idNumber: 9
   skinName: 
   price: 10
   isAdsReward: 0

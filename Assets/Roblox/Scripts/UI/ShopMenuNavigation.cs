@@ -9,6 +9,8 @@ public class ShopMenuNavigation : MonoBehaviour
     [SerializeField]
     private GameObject[] navPages;
     [SerializeField]
+    private SkinShopPage[] shopPages;
+    [SerializeField]
     private GameObject buttonContent;
 
     [Header("HairContent")]
@@ -26,6 +28,7 @@ public class ShopMenuNavigation : MonoBehaviour
     private SoundController soundController;
 
     public static event Action<int> TabSelected;
+
     private void OnEnable()
     {
         for (int i = 0; i < navButtons.Length; i++)
@@ -79,7 +82,13 @@ public class ShopMenuNavigation : MonoBehaviour
         ToggleBackButton(true);
         prevPage.SetActive(false);
         navPages[index].SetActive(true);
+              
         currentPage = navPages[index];
+        if(currentPage.TryGetComponent(out SkinShopPage currentShopPage))
+        {
+            currentShopPage.SelectPage();
+        }
+        
 
         soundController.MakeClickSound();
         TabSelected?.Invoke(index);
@@ -102,8 +111,7 @@ public class ShopMenuNavigation : MonoBehaviour
             currentPage = navPages[1];
             prevPage = buttonContent;
             TabSelected?.Invoke(-2);
-        }
-     
+        }    
     }
     void OpenHairOption(int index)
     {
