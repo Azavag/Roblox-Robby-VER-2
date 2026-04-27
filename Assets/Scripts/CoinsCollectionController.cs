@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CoinsCollectionController : MonoBehaviour
@@ -42,9 +41,9 @@ public class CoinsCollectionController : MonoBehaviour
         PrepareCoinsOnLevel(lastCollectedCoinIndex);
     }
 
-    void PrepareCoinsOnLevel(int collectedCoins)
+    void PrepareCoinsOnLevel(int collectedCoinIndex)
     {
-        for(int i = 0; i < collectedCoins; i++)
+        for(int i = 0; i < collectedCoinIndex; i++)
         {
             coinControllers[i].DeactivateCoin();
         }

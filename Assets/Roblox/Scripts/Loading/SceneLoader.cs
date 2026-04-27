@@ -20,6 +20,7 @@ public class SceneLoader : MonoBehaviour
 #if !UNITY_EDITOR
 if (!isSdkReady) 
         CheckSdkReady();
+        Debug.Log("Проверка готовности СДК");
 #else
 isSdkReady = true;
 YandexSDK.dataIsLoaded = true;

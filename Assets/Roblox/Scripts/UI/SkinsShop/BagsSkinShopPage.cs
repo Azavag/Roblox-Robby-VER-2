@@ -12,6 +12,8 @@ public class BagsSkinShopPage : SkinShopPage
     [SerializeField]
     private float targetAngle;
     [SerializeField]
+    private float startAngle;
+    [SerializeField]
     private Ease rotateEaseType;
 
     private Tween _rotatePostureTween;
@@ -34,7 +36,7 @@ public class BagsSkinShopPage : SkinShopPage
     }
 
 
-    public override void SelectPage()
+    public override void OpenPage()
     {
         RotatePosture();
     }
@@ -75,4 +77,24 @@ public class BagsSkinShopPage : SkinShopPage
         _isInitialized = false;
     }
 
+    public override void ClosePage()
+    {
+        // Останавливаем предыдущую анимацию, если она еще активна
+        if (_rotatePostureTween != null && _rotatePostureTween.IsActive())
+        {
+            _rotatePostureTween.Pause();
+            _rotatePostureTween.Kill();
+            _rotatePostureTween = null;
+        }
+
+        // Вращаем от текущей позиции на targetAngle градусов
+        _rotatePostureTween = playerPostureObject.transform
+            .DOLocalRotate(
+                new Vector3(0, startAngle, 0),
+                rotateDuration
+            )
+            .SetEase(rotateEaseType)
+            .OnKill(() => _rotatePostureTween = null) // Очищаем ссылку при уничтожении
+            .Play();
+    }
 }

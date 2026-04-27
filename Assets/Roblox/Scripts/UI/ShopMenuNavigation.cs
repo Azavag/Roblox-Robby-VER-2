@@ -84,11 +84,16 @@ public class ShopMenuNavigation : MonoBehaviour
         navPages[index].SetActive(true);
               
         currentPage = navPages[index];
-        if(currentPage.TryGetComponent(out SkinShopPage currentShopPage))
+        if (prevPage.TryGetComponent(out SkinShopPage prevShopPage))
         {
-            currentShopPage.SelectPage();
+            prevShopPage.ClosePage();
+        }
+        if (currentPage.TryGetComponent(out SkinShopPage currentShopPage))
+        {
+            currentShopPage.OpenPage();
         }
         
+
 
         soundController.MakeClickSound();
         TabSelected?.Invoke(index);
@@ -99,19 +104,29 @@ public class ShopMenuNavigation : MonoBehaviour
         soundController.MakeClickSound();
         currentPage.SetActive(false);
         prevPage.SetActive(true);
+
+        if (currentPage.TryGetComponent(out SkinShopPage currentShopPage))
+        {
+            currentShopPage.ClosePage();
+        }
+        if (prevPage.TryGetComponent(out SkinShopPage prevShopPage))
+        {
+            prevShopPage.OpenPage();
+        }
+       
         if (prevPage == buttonContent)
         {
             ToggleBackButton(false);
             currentPage = prevPage;
             TabSelected?.Invoke(-1);
-            return;
         }
         if (currentPage == hairOptions[0] || currentPage == hairOptions[1])
         {
             currentPage = navPages[1];
             prevPage = buttonContent;
             TabSelected?.Invoke(-2);
-        }    
+        }
+       
     }
     void OpenHairOption(int index)
     {

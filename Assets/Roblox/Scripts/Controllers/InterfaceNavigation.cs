@@ -89,6 +89,11 @@ public class InterfaceNavigation : MonoBehaviour
         ToggleCanvas(finalCanvas, false);
         ToggleJoystickCanvas(true);
         ToggleAdvAlertCanvas(false);
+        
+    }
+
+    private void Start()
+    {
         CursorLocking.LockCursor(true);
     }
 
@@ -164,8 +169,8 @@ public class InterfaceNavigation : MonoBehaviour
     public void FinishLevel()
     {
         Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[spawnManager.GetLevelNumber()] = 0;
+        Bank.Instance.playerInfo.currentLevelsCoinsNumbers[spawnManager.GetLevelNumber()] = -1;
         YandexSDK.Save();
-
         PlayerController.IsBusy = false;
         OpenMainMenu();
     }

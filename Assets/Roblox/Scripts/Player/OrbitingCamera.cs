@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 using UnityEngine.XR;
+using static UnityEngine.AudioSettings;
 
 namespace MenteBacata.ScivoloCharacterControllerDemo
 {
@@ -11,88 +13,195 @@ namespace MenteBacata.ScivoloCharacterControllerDemo
 
         public float distance = 5f;
 
-        public float sensitivity = 100f;
-
-        private float yRot = 180f;
-
-        private float xRot;
-        Vector2 touchStart, touchEnd;
-        Rect blockZone1;
-        Rect blockZone2;
-        //[SerializeField] Transform joystickRect;
-        //[SerializeField] Transform jumpButtonRect;
+        [Header("Camera Settings")]
+        [SerializeField] private float sensitivity = 1f;
         [SerializeField] float mobileCameraSens = 12f;
-        bool isTouch;
-        bool isMobile;
-        
+        [Header("Input Settings")]
+        [SerializeField] private bool invertY = false;
+        [SerializeField] private string mouseXInput = "Mouse X";
+        [SerializeField] private string mouseYInput = "Mouse Y";
+
+        [SerializeField] 
+        private CinemachineFreeLook freeLookCamera;
+
+        private bool _isMobile;
+        private Vector2 _lastTouchPosition;
+        private bool _isTouching;
+
         private void Start()
         {
 #if UNITY_EDITOR
             // Somehow after updating to 2019.3, mouse axes sensitivity decreased, but only in the editor.
             sensitivity *= 10f;
-#endif              
-            SetStartCameraRotation();
+#endif
+            // Настраиваем оси ввода для Cinemachine
+            SetupCinemachineInput();
+            //SetStartCameraRotation();
         }
 
-        private void FixedUpdate()
+        private void SetupCinemachineInput()
         {
-            //var joystickRectTransform = joystickRect.GetComponent<RectTransform>();
-            //blockZone1 = new Rect(new Vector2(0, 0), joystickRectTransform.sizeDelta + new Vector2(50, 50));
-            //blockZone1.center = new Vector2(joystickRect.position.x, joystickRect.position.y);
+            // Отключаем стандартный ввод Cinemachine
+            freeLookCamera.m_XAxis.m_InputAxisName = "";
+            freeLookCamera.m_YAxis.m_InputAxisName = "";
 
-            //var jumpButtonRectTransform = jumpButtonRect.GetComponent<RectTransform>();
-            //blockZone2 = new Rect(new Vector2(0, 0), jumpButtonRectTransform.sizeDelta + new Vector2(50, 50));
-            //blockZone2.center = new Vector2(jumpButtonRect.position.x, jumpButtonRect.position.y);
+            // Настраиваем ограничения для осей
+            freeLookCamera.m_YAxis.m_MinValue = 0f;
+            freeLookCamera.m_YAxis.m_MaxValue = 75f; // Как в вашем оригинальном скрипте
         }
-        private void LateUpdate()
+        private void Update()
         {
-            if (!isMobile)
+            if (!_isMobile)
             {
-                yRot += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-                xRot -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+                HandleMouseInput();
             }
             else
             {
-                if (Input.touchCount == 1) // Если есть одно касание на экране
-                {
-                    Touch touch = Input.GetTouch(0);
+                HandleTouchInput();
+            }
 
-                    if ((touch.phase == TouchPhase.Began && !blockZone1.Contains(touch.position))
-                        && (touch.phase == TouchPhase.Began && !blockZone2.Contains(touch.position)))
-                    {
-                        touchStart = touch.position;
-                        isTouch = true;
-                    }
-                    else if (isTouch && touch.phase == TouchPhase.Moved)
-                    {
-                        touchEnd = touch.position;
-                        float touchDeltaX = (touchEnd.x - touchStart.x) * mobileCameraSens * Time.deltaTime;
-                        float touchDeltaY = -(touchEnd.y - touchStart.y) * mobileCameraSens * Time.deltaTime;
-                        xRot += touchDeltaY;
-                        yRot += touchDeltaX;
-                        touchStart = touchEnd;
-                    }
-                    else if (touch.phase == TouchPhase.Ended)
-                        isTouch = false;
+            ApplyInputToCamera();
+        }
+        private void HandleMouseInput()
+        {
+            float mouseX = 0f;
+            float mouseY = 0f;
+
+            // Поддержка старой и новой системы ввода
+#if ENABLE_INPUT_SYSTEM
+        if (Mouse.current != null)
+        {
+            mouseX = Mouse.current.delta.x.ReadValue() * sensitivity * Time.deltaTime;
+            mouseY = Mouse.current.delta.y.ReadValue() * sensitivity * Time.deltaTime;
+        }
+#else
+            mouseX = Input.GetAxis(mouseXInput) * sensitivity * Time.deltaTime;
+            mouseY = Input.GetAxis(mouseYInput) * sensitivity * Time.deltaTime;
+#endif
+
+            if (invertY) mouseY = -mouseY;
+
+            freeLookCamera.m_XAxis.m_InputAxisValue = mouseX;
+            freeLookCamera.m_YAxis.m_InputAxisValue = mouseY;
+        }
+
+        private void HandleTouchInput()
+        {
+            if (Input.touchCount == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                //if (IsTouchBlocked(touch.position)) return;
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                        _lastTouchPosition = touch.position;
+                        _isTouching = true;
+                        break;
+
+                    case TouchPhase.Moved:
+                        if (_isTouching)
+                        {
+                            Vector2 delta = touch.position - _lastTouchPosition;
+
+                            float touchX = delta.x * mobileCameraSens * Time.deltaTime;
+                            float touchY = -delta.y * mobileCameraSens * Time.deltaTime;
+
+                            freeLookCamera.m_XAxis.m_InputAxisValue = touchX;
+                            freeLookCamera.m_YAxis.m_InputAxisValue = touchY;
+
+                            _lastTouchPosition = touch.position;
+                        }
+                        break;
+
+                    case TouchPhase.Ended:
+                    case TouchPhase.Canceled:
+                        _isTouching = false;
+                        freeLookCamera.m_XAxis.m_InputAxisValue = 0f;
+                        freeLookCamera.m_YAxis.m_InputAxisValue = 0f;
+                        break;
                 }
             }
-            xRot = Mathf.Clamp(xRot, 0f, 75f);
+            else
+            {
+                freeLookCamera.m_XAxis.m_InputAxisValue = 0f;
+                freeLookCamera.m_YAxis.m_InputAxisValue = 0f;
+            }
+        }
 
-            
-            Quaternion worldRotation = transform.parent != null ? transform.parent.rotation : Quaternion.FromToRotation(Vector3.up, target.up);
-            Quaternion cameraRotation = worldRotation * Quaternion.Euler(xRot, yRot, 0f);
-            Vector3 targetToCamera = cameraRotation * new Vector3(0f, 0f, -distance);
-            transform.SetPositionAndRotation(target.TransformPoint(0f, verticalOffset, 0f) + targetToCamera, cameraRotation);
-        }
-        public void SetStartCameraRotation()
+        //private bool IsTouchBlocked(Vector2 touchPosition)
+        //{
+        //    foreach (var zone in blockedTouchZones)
+        //    {
+        //        if (zone == null) continue;
+
+        //        Vector2 zoneCenter = zone.position;
+        //        Vector2 zoneSize = zone.rect.size;
+        //        Rect zoneRect = new Rect(
+        //            zoneCenter.x - zoneSize.x / 2,
+        //            zoneCenter.y - zoneSize.y / 2,
+        //            zoneSize.x,
+        //            zoneSize.y
+        //        );
+
+        //        // Добавляем небольшой отступ
+        //        zoneRect = zoneRect.Expand(50f);
+
+        //        if (zoneRect.Contains(touchPosition))
+        //            return true;
+        //    }
+
+        //    return false;
+        //}
+
+        private void ApplyInputToCamera()
         {
-            xRot = 30f;
-            yRot = target.rotation.eulerAngles.y;
+            // Cinemachine автоматически применяет значения осей
+            // Можно добавить дополнительные модификации здесь
         }
+
         public void SetMobile(bool state)
         {
-            isMobile = state;
+            _isMobile = state;
+
+            // Сбрасываем значения при переключении
+            freeLookCamera.m_XAxis.m_InputAxisValue = 0f;
+            freeLookCamera.m_YAxis.m_InputAxisValue = 0f;
+        }
+
+        public void SetTarget(Transform newTarget)
+        {
+            freeLookCamera.LookAt = newTarget;
+            freeLookCamera.Follow = newTarget;
+        }
+
+        public void ResetCamera()
+        {
+            // Сброс камеры в начальную позицию
+            freeLookCamera.m_XAxis.Value = 0f;
+            freeLookCamera.m_YAxis.Value = 0.5f; // Средняя позиция по вертикали
+
+            // Можно настроить под ваши начальные значения
+            // Например: xRot = 30f соответсвует определенному значению YAxis
+            // YAxis от 0 (низ) до 1 (верх)
+            float normalizedXRot = 30f / 75f; // 75f - ваш MaxValue
+            freeLookCamera.m_YAxis.Value = normalizedXRot;
         }
     }
-    
+
+    // Расширение для Rect
+    public static class RectExtensions
+    {
+        public static Rect Expand(this Rect rect, float amount)
+        {
+            return new Rect(
+                rect.x - amount,
+                rect.y - amount,
+                rect.width + amount * 2,
+                rect.height + amount * 2
+            );
+        }
+    }
 }
+   

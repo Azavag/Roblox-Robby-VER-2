@@ -92,7 +92,10 @@ public abstract class SkinButtonController : MonoBehaviour
         adsButton.gameObject.SetActive(false);
 
         if (skinCard.isAdsReward && !skinCard.isBought)
+        {
             adsButton.gameObject.SetActive(true);
+            return;
+        }    
 
         if (!skinCard.isBought)
         {

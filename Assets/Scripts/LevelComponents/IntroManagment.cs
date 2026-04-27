@@ -9,6 +9,8 @@ using UnityEngine.Playables;
 public class IntroManagment : MonoBehaviour
 {
     [SerializeField]
+    private bool isSkipIntro;
+    [SerializeField]
     private PlayableDirector introDirector;
 
     [Header("Cameras fields")]
@@ -17,7 +19,14 @@ public class IntroManagment : MonoBehaviour
     [SerializeField]
     private CinemachineSmoothPath[] trackPathes;
 
-    public Action IntroFinished;
+    public Action IntroFinished;  
+
+    public bool IsSkipIntro 
+    { 
+        get => isSkipIntro;
+        set => isSkipIntro = value;
+    }
+
     private void Awake()
     {
         introDirector.stopped += OnDirectorStopped;
@@ -32,12 +41,21 @@ public class IntroManagment : MonoBehaviour
     }
     private void Initialiazation()
     {
+        if (isSkipIntro)
+            return;
+
         ToggleDollyCameras(false);
         ToggleSmoothPathTracks(true);
         dollyCameras[0].gameObject.SetActive(true);
     }
     public void StartIntro()
     {
+        if (isSkipIntro)
+        {
+            StopDirector();
+            return;
+        }
+
         introDirector.Play();
     }
 
@@ -64,6 +82,10 @@ public class IntroManagment : MonoBehaviour
     }
 
     private void OnDirectorStopped(PlayableDirector director)
+    {
+        StopDirector();
+    }
+    private void StopDirector()
     {
         IntroFinished?.Invoke();
         ToggleDollyCameras(false);

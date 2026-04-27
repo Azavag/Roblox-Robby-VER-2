@@ -15,6 +15,7 @@ public class SoccerController : MonoBehaviour
     private bool isAnimation;
     private SoundController soundController;
     private Animator animator; 
+    private bool _isKicked = false;
 
     void Start()
     {
@@ -35,11 +36,15 @@ public class SoccerController : MonoBehaviour
         }
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Pass") && isAnimation)
         {
+            if (_isKicked)
+                return;
+
             float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
             Invoke("PassBool", animationLength / 3.75f);
             soundController.Play("BallKick");
             playerController.BlockPlayersInput(false);
             isAnimation = false;
+            _isKicked = true;
         }
 
     }

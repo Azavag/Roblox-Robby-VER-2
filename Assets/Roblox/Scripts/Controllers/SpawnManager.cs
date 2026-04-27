@@ -24,6 +24,8 @@ public class SpawnManager : MonoBehaviour
     private SoundController soundController;
     private AdvManager advManager;
 
+    public event Action AllSpawnsReached;
+
     private void OnEnable()
     {
         DeadZone.PlayerDead += OnPlayerDead;
@@ -49,6 +51,7 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
         currentCheckPointNumber = Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[levelNumber];
+        Debug.Log("currentCheckPointNumber = " + currentCheckPointNumber);
         playerController.BlockPlayersInput(true);
         
         OnReachNewCheckpoint(currentCheckPointNumber);
@@ -65,8 +68,12 @@ public class SpawnManager : MonoBehaviour
     {
         fadeScreen.EnterLevelFadeOut();
         yield return new WaitForSeconds(0.1f);
-        introManagment.StartIntro();      
+        if (introManagment != null)
+        {
+            introManagment.StartIntro();
+        }
         TransferPlayer();
+        CursorLocking.LockCursor(true);
         yield return new WaitForSeconds(fadeScreen.GetOutFadeDuration() * 0.7f);
     }
     private void OnIntroFinished()
@@ -83,19 +90,35 @@ public class SpawnManager : MonoBehaviour
         TransferPlayer();
         yield return new WaitForSeconds(fadeScreen.GetOutFadeDuration() * 0.7f);
         playerController.BlockPlayersInput(false);
+        CursorLocking.LockCursor(true);
         PlayerController.IsBusy = false;
         advManager.StartCountToAdv();
     }
     private void OnSpawnPointSet(CheckPoint point)
     {
         int index = Array.IndexOf(checkPoints, point);
+        if (index < 0)
+        {
+            Debug.LogWarning($"Checkpoint {point.name} was not found in SpawnManager list on level {levelNumber}.");
+            return;
+        }
+
         OnReachNewCheckpoint(index);
         Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[levelNumber] = index;
+
+        if(index >= checkPoints.Length - 1)
+        {
+            AllSpawnsReached?.Invoke();
+        }
     }
+
+    private 
+
     void TransferPlayer()
     {
         playerController.transform.position = currenCheckPointTransform.position;
     }
+
     void OnPlayerDead()
     {
         soundController.Play("Death");
@@ -106,6 +129,7 @@ public class SpawnManager : MonoBehaviour
     {
         currentCheckPointNumber = index;
         currenCheckPointTransform = checkPoints[currentCheckPointNumber].GetSpawnCoordinates();
+        Debug.Log($"CheckpointObject = {checkPoints[currentCheckPointNumber]}");
     }
     public int GetLevelNumber()
     {

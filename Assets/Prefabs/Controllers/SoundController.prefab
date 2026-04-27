@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3607461982660563739}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 358.65903, y: 287.97873, z: -5.1967635}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1850439265940333008
 MonoBehaviour:
@@ -51,8 +51,8 @@ MonoBehaviour:
   sounds:
   - name: ButtonClick
     typeOfSound: 2
-    clip: {fileID: 8300000, guid: 5644887a20d906a44a0b639658ce9fea, type: 3}
-    volume: 0.1
+    clip: {fileID: 8300000, guid: 5aaa4c7d5781546c6a13a9f1eb97b15b, type: 3}
+    volume: 0.25
     pitch: 1
     loop: 0
     isPlayOnAwake: 0
@@ -60,15 +60,15 @@ MonoBehaviour:
   - name: DeclineBuy
     typeOfSound: 2
     clip: {fileID: 8300000, guid: 3532279f6f1519b44b3888c0e631b74d, type: 3}
-    volume: 0.1
+    volume: 0.3
     pitch: 1
     loop: 0
     isPlayOnAwake: 0
     audioSource: {fileID: 0}
   - name: ConfirmBuy
     typeOfSound: 2
-    clip: {fileID: 8300000, guid: ec0b993c728ad7245a2503bc5b5ba2b2, type: 3}
-    volume: 0.1
+    clip: {fileID: 8300000, guid: 9d12098ed55364e7e80e277242e2c77e, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 0
     isPlayOnAwake: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   - name: Background
     typeOfSound: 1
     clip: {fileID: 8300000, guid: 1555836638cd34283a3780a19b58d4c6, type: 3}
-    volume: 0.03
+    volume: 0.05
     pitch: 1
     loop: 1
     isPlayOnAwake: 1
@@ -84,7 +84,7 @@ MonoBehaviour:
   - name: CardClick
     typeOfSound: 2
     clip: {fileID: 8300000, guid: f8d8ae904b266084caf4321687b59e92, type: 3}
-    volume: 0.1
+    volume: 0.2
     pitch: 1
     loop: 0
     isPlayOnAwake: 0
@@ -107,8 +107,8 @@ MonoBehaviour:
     audioSource: {fileID: 0}
   - name: SelectSkin
     typeOfSound: 2
-    clip: {fileID: 8300000, guid: 0d96390a04bcfa84288baa6f45297003, type: 3}
-    volume: 0.1
+    clip: {fileID: 8300000, guid: ec0b993c728ad7245a2503bc5b5ba2b2, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 0
     isPlayOnAwake: 0
@@ -121,42 +121,10 @@ MonoBehaviour:
     loop: 0
     isPlayOnAwake: 0
     audioSource: {fileID: 0}
-  - name: Spring
-    typeOfSound: 2
-    clip: {fileID: 8300000, guid: a937c268383646a428aa4c5a81d2593b, type: 3}
-    volume: 0.2
-    pitch: 1
-    loop: 0
-    isPlayOnAwake: 0
-    audioSource: {fileID: 0}
   - name: Success
     typeOfSound: 2
     clip: {fileID: 8300000, guid: 3c5848293ef930f48b80a27e38a76987, type: 3}
     volume: 0.2
-    pitch: 1
-    loop: 0
-    isPlayOnAwake: 0
-    audioSource: {fileID: 0}
-  - name: Fireworks
-    typeOfSound: 2
-    clip: {fileID: 8300000, guid: 2bebe14ea9e3f8846a671025dc52d100, type: 3}
-    volume: 0.2
-    pitch: 1
-    loop: 0
-    isPlayOnAwake: 0
-    audioSource: {fileID: 0}
-  - name: BallKick
-    typeOfSound: 2
-    clip: {fileID: 8300000, guid: 754be8e1625a5db48a07bdd4b206eb20, type: 3}
-    volume: 0.2
-    pitch: 1
-    loop: 0
-    isPlayOnAwake: 0
-    audioSource: {fileID: 0}
-  - name: CannonShot
-    typeOfSound: 2
-    clip: {fileID: 8300000, guid: 3324a58d33cbb7543944ffe87f176f28, type: 3}
-    volume: 0.1
     pitch: 1
     loop: 0
     isPlayOnAwake: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2766356318628091512}
   - component: {fileID: 6510371182754385677}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HatSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 737939360693629086}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6510371182754385677
 MonoBehaviour:
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85b30dc8e13792499bc606178d329a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 0
+  controllerSkinType: 0
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  hatSkinsObjectsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 6096540039132667619}
   - component: {fileID: 9157890116005447407}
   - component: {fileID: 589850939954010827}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SkinsShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2082796403363333586}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -182,6 +181,7 @@ Transform:
   - {fileID: 7120482463474099145}
   - {fileID: 6968535918153138479}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9157890116005447407
 MonoBehaviour:
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77202ca50b2c4394d80d5efd1f0d1a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeButton: {fileID: 0}
+  closeSkinShopButton: {fileID: 0}
   buyWindow: {fileID: 0}
 --- !u!114 &589850939954010827
 MonoBehaviour:
@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buyButton: {fileID: 0}
   adsButton: {fileID: 0}
+  confirmBuySkinParticles: {fileID: 0}
 --- !u!1 &2470471361949411454
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,9 +221,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2986773361113010748}
-  - component: {fileID: 8652775111158371514}
-  - component: {fileID: 3861983797130415408}
-  m_Layer: 8
+  - component: {fileID: 324536119}
+  m_Layer: 0
   m_Name: PetSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,15 +236,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2470471361949411454}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8652775111158371514
+--- !u!114 &324536119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,10 +253,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2470471361949411454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d8312c8a52687d4db94ad6a20142655, type: 3}
+  m_Script: {fileID: 11500000, guid: 26801ac48a490f04eae7e281d05e4712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 1
+  controllerSkinType: 1
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -301,23 +301,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skinsObjectsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
   selectedText: {fileID: 0}
---- !u!114 &3861983797130415408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2470471361949411454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e745ae92ab29ff4e9b9dc2a68f2eed5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3044707754783595758
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4631906266462086085}
   - component: {fileID: 8088761329640839384}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ShirtSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,13 +330,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3044707754783595758}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8088761329640839384
 MonoBehaviour:
@@ -362,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8e08767ea0ec44f87e77ae299cb638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 2
+  controllerSkinType: 2
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -406,11 +394,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skinsColorsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
   selectedText: {fileID: 0}
+  skinsColorsStorage: {fileID: 0}
 --- !u!1 &4382324755606470853
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8661110101488550890}
   - component: {fileID: 1875787979202055574}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HairstyleSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,13 +424,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4382324755606470853}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1875787979202055574
 MonoBehaviour:
@@ -455,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba56e612ab292444ac5081ee98c0ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 4
+  controllerSkinType: 4
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -518,8 +507,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  skinsObjectsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
@@ -534,8 +522,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7120482463474099145}
-  - component: {fileID: 6385837298180065829}
-  m_Layer: 8
+  - component: {fileID: 983835047}
+  m_Layer: 0
   m_Name: PantsSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,15 +537,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4620701284067228252}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6385837298180065829
+--- !u!114 &983835047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -566,10 +554,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4620701284067228252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3a3eee8a17c03443b576fa55c5686d9, type: 3}
+  m_Script: {fileID: 11500000, guid: af66c165f2b41404e9146ac87b26cdc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 3
+  controllerSkinType: 3
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -613,11 +601,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skinsColorsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
   selectedText: {fileID: 0}
+  skinsColorsStorage: {fileID: 0}
 --- !u!1 &7286096775189245875
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4579265762659470952}
   - component: {fileID: 8479571450058244095}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BagSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,13 +631,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7286096775189245875}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8479571450058244095
 MonoBehaviour:
@@ -662,7 +651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a109733dd3c355b459a5548ddb591123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 6
+  controllerSkinType: 6
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -689,7 +678,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skinsObjectsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
@@ -704,7 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6968535918153138479}
   - component: {fileID: 3792435704178907498}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HairColorSkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,13 +707,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7286533462775998648}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3792435704178907498
 MonoBehaviour:
@@ -738,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef34756997a0994ea6c12540a080e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 7
+  controllerSkinType: 7
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -782,11 +771,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skinsColorsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
   selectedText: {fileID: 0}
+  skinType: 7
+  skinsColorsStorage: {fileID: 0}
 --- !u!1 &8772782205200517694
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,7 +788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7583700847502381306}
   - component: {fileID: 1908924833309060558}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: "\u0410ccessoriesSkins"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -811,13 +802,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8772782205200517694}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6096540039132667619}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1908924833309060558
 MonoBehaviour:
@@ -831,7 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13830cfad9280924dba7883ba03633f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinType: 5
+  controllerSkinType: 5
   skinCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -852,7 +843,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skinsObjectsStorage: {fileID: 0}
+  skinsStorage: {fileID: 0}
   buyButton: {fileID: 0}
   selectButton: {fileID: 0}
   adsButton: {fileID: 0}
