@@ -168,8 +168,14 @@ public class InterfaceNavigation : MonoBehaviour
 
     public void FinishLevel()
     {
-        Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[spawnManager.GetLevelNumber()] = 0;
-        Bank.Instance.playerInfo.currentLevelsCoinsNumbers[spawnManager.GetLevelNumber()] = -1;
+        int levelNumber = spawnManager.GetLevelNumber();
+        Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[levelNumber] = 0;
+        Bank.Instance.playerInfo.currentLevelsCoinsNumbers[levelNumber] = -1;
+        if (Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks != null &&
+            levelNumber < Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks.Length)
+        {
+            Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks[levelNumber] = string.Empty;
+        }
         YandexSDK.Save();
         PlayerController.IsBusy = false;
         OpenMainMenu();

@@ -13,12 +13,17 @@ public class CoinObject : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
+        if (!isAlive)
+            return;
+
         if (other.CompareTag("Player"))
             Collecting();
     }
 
     void Collecting()
     {
+        isAlive = false;
+        GetComponent<Collider>().enabled = false;
         CoinCollected?.Invoke(this);
     }
 

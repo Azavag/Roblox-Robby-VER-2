@@ -13,9 +13,7 @@ public class CoinsCollectionController : MonoBehaviour
 
     private SoundController soundController;
     private Wallet wallet;
-
-    [SerializeField]
-    private int lastCollectedCoinIndex;
+    private bool[] collectedCoinsState;
     private void OnEnable()
     {
         CoinObject.CoinCollected += OnCoinCollected;   
@@ -33,29 +31,41 @@ public class CoinsCollectionController : MonoBehaviour
     }
     void Start()
     {
-        int currenCollectedCoinIndex = Bank.Instance.playerInfo.currentLevelsCoinsNumbers[levelIndex];
-        lastCollectedCoinIndex = currenCollectedCoinIndex;
-
-        if (lastCollectedCoinIndex < 0)
-            return;
-        PrepareCoinsOnLevel(lastCollectedCoinIndex);
+        collectedCoinsState = new bool[coinControllers.Length];
+        LoadCollectedCoinsState();
+        PrepareCoinsOnLevel();
     }
 
-    void PrepareCoinsOnLevel(int collectedCoinIndex)
+    void PrepareCoinsOnLevel()
     {
-        for(int i = 0; i < collectedCoinIndex; i++)
+        for (int i = 0; i < collectedCoinsState.Length; i++)
         {
-            coinControllers[i].DeactivateCoin();
+            if (collectedCoinsState[i])
+            {
+                coinControllers[i].DeactivateCoin();
+            }
         }
     }
 
     private void OnCoinCollected(CoinObject coin)
     {
+        int collectedCoinIndex = Array.IndexOf(coinControllers, coin);
+        if (collectedCoinIndex < 0)
+        {
+            Debug.LogWarning($"Coin {coin.name} was not found in CoinsCollectionController list.");
+            return;
+        }
+
+        if (collectedCoinsState[collectedCoinIndex])
+            return;
+
+        collectedCoinsState[collectedCoinIndex] = true;
+
         PlayParticles(coin);
         soundController.Play("CoinCollect");
-        int collectedCoinIndex = Array.IndexOf(coinControllers, coin);
-        SaveCollectedCoinIndex(collectedCoinIndex);
-        CalculateMoneyValue(collectedCoinIndex);
+        coinControllers[collectedCoinIndex].DeactivateCoin();
+        wallet.OnCoinsValueChanged(coinControllers[collectedCoinIndex].GetMoneyValue());
+        SaveCollectedCoinsState();
     }
 
     private void PlayParticles(CoinObject coin)
@@ -65,26 +75,61 @@ public class CoinsCollectionController : MonoBehaviour
         tempParticles.Play();
     }
 
-    private void CalculateMoneyValue(int collectedCoinIndex)
+    private void LoadCollectedCoinsState()
     {
-        int totalMoneyValue = 0;
-        int startIndex = lastCollectedCoinIndex + 1;
-        // ѕроходим по всем пропущенным и текущей монете
-        for (int i = startIndex; i <= collectedCoinIndex; i++)
+        if (Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks == null ||
+            levelIndex >= Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks.Length)
         {
-            totalMoneyValue += coinControllers[i].GetMoneyValue();
-            coinControllers[i].DeactivateCoin();
+            return;
         }
 
+        string coinsMask = Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks[levelIndex];
+        if (string.IsNullOrEmpty(coinsMask))
+        {
+            InitializeCoinsStateFromCheckpointProgress();
+            SaveCollectedCoinsState();
+            return;
+        }
 
-        wallet.OnCoinsValueChanged(totalMoneyValue);
-        lastCollectedCoinIndex = collectedCoinIndex;
+        int count = Math.Min(coinsMask.Length, collectedCoinsState.Length);
+        for (int i = 0; i < count; i++)
+        {
+            collectedCoinsState[i] = coinsMask[i] == '1';
+        }
+    }
+
+    private void InitializeCoinsStateFromCheckpointProgress()
+    {
+        if (Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers == null ||
+            levelIndex >= Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers.Length)
+        {
+            return;
+        }
+
+        int reachedCheckpointIndex = Bank.Instance.playerInfo.currentLevelsCheckpointsNumbers[levelIndex];
+        int coinsToDisableCount = Mathf.Clamp(reachedCheckpointIndex, 0, collectedCoinsState.Length);
+        for (int i = 0; i < coinsToDisableCount; i++)
+        {
+            collectedCoinsState[i] = true;
+        }
     }
 
 
-    public void SaveCollectedCoinIndex(int coinIndex)
+    public void SaveCollectedCoinsState()
     {
-        Bank.Instance.playerInfo.currentLevelsCoinsNumbers[levelIndex] = coinIndex;     
+        if (Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks == null ||
+            levelIndex >= Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks.Length)
+        {
+            return;
+        }
+
+        char[] maskChars = new char[collectedCoinsState.Length];
+        for (int i = 0; i < collectedCoinsState.Length; i++)
+        {
+            maskChars[i] = collectedCoinsState[i] ? '1' : '0';
+        }
+
+        Bank.Instance.playerInfo.currentLevelsCollectedCoinsMasks[levelIndex] = new string(maskChars);
         YandexSDK.Save();
     }
 }

@@ -23,6 +23,7 @@ public class PlayerInfo
 
     public int[] currentLevelsCheckpointsNumbers = new int[2];
     public int[] currentLevelsCoinsNumbers = new int[2];
+    public string[] currentLevelsCollectedCoinsMasks = new string[2];
 
     //Купленные скины
     public bool[] hatSkinsBuyStates = new bool[90];                //++
@@ -60,6 +61,13 @@ public class Bank : MonoBehaviour
                 Instance.playerInfo.currentLevelsCoinsNumbers[index] = -1;
             }
 
+            if (Instance.playerInfo.currentLevelsCollectedCoinsMasks == null ||
+                Instance.playerInfo.currentLevelsCollectedCoinsMasks.Length != Instance.playerInfo.currentLevelsCheckpointsNumbers.Length)
+            {
+                Instance.playerInfo.currentLevelsCollectedCoinsMasks =
+                    new string[Instance.playerInfo.currentLevelsCheckpointsNumbers.Length];
+            }
+
             yandexSDK.Load();          
             return;
         }
@@ -72,6 +80,13 @@ public class Bank : MonoBehaviour
 
         if (YandexSDK.dataIsLoaded)
         {
+            if (Instance.playerInfo.currentLevelsCollectedCoinsMasks == null ||
+                Instance.playerInfo.currentLevelsCollectedCoinsMasks.Length != Instance.playerInfo.currentLevelsCheckpointsNumbers.Length)
+            {
+                Instance.playerInfo.currentLevelsCollectedCoinsMasks =
+                    new string[Instance.playerInfo.currentLevelsCheckpointsNumbers.Length];
+            }
+
             Instance.playerInfo.hatSkinsBuyStates[0] = true;
             Instance.playerInfo.petSkinsBuyStates[0] = true;
             Instance.playerInfo.accessoriesSkinsBuyStates[0] = true;
